@@ -1,13 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
+import { compareSync } from 'bcryptjs';
+import User from '../services/Login.service';
 
-const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+const validateLogin = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
+  let result;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'All fields must be filled' });
+  const user = await User.getUserByEmail(email);
+
+  if (user) {
+    result = compareSync(password, user.password);
   }
 
-  return next();
+  if (!user) {
+    return res.status(401).json({ message: 'Incorrect email or password' });
+  }
+
+  if (!result) {
+    return res.status(401).json({ message: 'Incorrect email or password' });
+  }
+
+  next();
 };
 
 export default validateLogin;

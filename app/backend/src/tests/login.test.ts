@@ -32,7 +32,7 @@ describe('Testando rota /login', () => {
     (User.findOne as sinon.SinonStub).restore();
   })
 
-  it('Testa se retorna um token valido ', async () => {
+  it('Testa se retorna um token valido', async () => {
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
@@ -40,5 +40,25 @@ describe('Testando rota /login', () => {
 
     expect(chaiHttpResponse).to.have.status(200);
     expect(chaiHttpResponse.body).to.haveOwnProperty('token');
+  });
+
+  it('Testa se não é possivel fazer login com uma senha invalida', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send({ email: 'user@user.com', password: '999999' })
+
+    expect(chaiHttpResponse).to.have.status(401);
+    expect(chaiHttpResponse.body).to.deep.equal({message: 'Incorrect email or password'});
+  });
+
+  it('Testa se não é possivel fazer login sem um email e senha', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send({ email: '', password: '' })
+
+    expect(chaiHttpResponse).to.have.status(400);
+    expect(chaiHttpResponse.body).to.deep.equal({message: 'All fields must be filled'});
   });
 });

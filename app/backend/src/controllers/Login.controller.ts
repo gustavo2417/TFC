@@ -4,11 +4,7 @@ import jwt from '../auth/jwt.auth';
 
 const login = async (req: Request, res: Response) => {
   const { body } = req;
-  const user = await loginService.getUserByEmail(body.email);
-
-  if (!user) {
-    return res.status(400).json({ message: 'Incorrect email or password' });
-  }
+  await loginService.getUserByEmail(body.email);
 
   return res.status(200).json({ token: jwt(body) });
 };
