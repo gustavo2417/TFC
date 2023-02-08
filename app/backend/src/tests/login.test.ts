@@ -61,4 +61,14 @@ describe('Testando rota /login', () => {
     expect(chaiHttpResponse).to.have.status(400);
     expect(chaiHttpResponse.body).to.deep.equal({message: 'All fields must be filled'});
   });
+
+  it('Testa que é impossivel logar sem um token', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/login/validate')
+      
+
+    expect(chaiHttpResponse).to.have.status(401);
+    expect(chaiHttpResponse.body).to.deep.equal({message: 'Token not found'});
+  });
 });
