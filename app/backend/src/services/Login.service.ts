@@ -1,4 +1,4 @@
-import User from '../database/models/User';
+import User from '../database/models/User.model';
 
 const getUserByEmail = async (email: string) => {
   const user = await User.findOne({ where: { email } });

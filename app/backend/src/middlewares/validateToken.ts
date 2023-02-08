@@ -27,8 +27,6 @@ const confirmToken = async (req: Request, res: Response, next: NextFunction) => 
 
   req.body.user = decoded;
 
-  console.log(decoded);
-
   return next();
 };
 
