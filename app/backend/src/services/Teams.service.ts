@@ -6,6 +6,13 @@ const getAll = async () => {
   return allTeams;
 };
 
+const getById = async (id: number) => {
+  const team = await Teams.findByPk(id);
+
+  return team;
+};
+
 export default {
   getAll,
+  getById,
 };
