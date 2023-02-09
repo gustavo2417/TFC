@@ -30,4 +30,23 @@ const confirmToken = async (req: Request, res: Response, next: NextFunction) => 
   return next();
 };
 
-export default confirmToken;
+const tokenValid = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.header('Authorization');
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+
+  const decoded = validateToken(token);
+
+  if (!decoded) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+
+  return next();
+};
+
+export default {
+  confirmToken,
+  tokenValid,
+};
