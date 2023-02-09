@@ -40,7 +40,7 @@ const tokenValid = async (req: Request, res: Response, next: NextFunction) => {
   const decoded = validateToken(token);
 
   if (!decoded) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Token must be a valid token' });
   }
 
   return next();
