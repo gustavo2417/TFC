@@ -8,5 +8,6 @@ const router = Router();
 router.get('/', controller.getAllTeams);
 router.post('/', validate.tokenValid, validateTeams, controller.create);
 router.patch('/:id/finish', controller.updateStatus);
+router.patch('/:id', controller.update);
 
 export default router;

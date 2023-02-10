@@ -47,8 +47,25 @@ const updateStatus = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'Finished' });
 };
 
+const update = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+
+  const updatedMatch = {
+    homeTeamGoals,
+    awayTeamGoals,
+  };
+
+  const numberId = parseInt(id, 10);
+
+  await matchesService.updateMatch(numberId, updatedMatch);
+
+  return res.status(200).json({ message: 'Match has been updated' });
+};
+
 export default {
   getAllTeams,
   create,
   updateStatus,
+  update,
 };

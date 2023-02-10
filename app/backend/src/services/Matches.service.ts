@@ -1,4 +1,5 @@
 import match from '../interfaces/Imatch';
+import updatedMatch from '../interfaces/IupdateMatch';
 import Matches from '../database/models/Matches.model';
 import Teams from '../database/models/Teams.model';
 
@@ -52,10 +53,20 @@ const updateMatchStatus = async (id: number) => {
   );
 };
 
+const updateMatch = async (id: number, update: Omit<updatedMatch, number>) => {
+  const { homeTeamGoals, awayTeamGoals } = update;
+
+  await Matches.update(
+    { homeTeamGoals, awayTeamGoals },
+    { where: { id } },
+  );
+};
+
 export default {
   getAll,
   getAllInProgressTrue,
   getAllInProgressFalse,
   createMatch,
   updateMatchStatus,
+  updateMatch,
 };
