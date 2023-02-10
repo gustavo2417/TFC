@@ -37,7 +37,7 @@ const getAllInProgressFalse = async () => {
   return result;
 };
 
-const createMatch = async (newMatch: Omit<match, string>) => {
+const createMatch = async (newMatch: Omit<match, number>) => {
   const { dataValues } = await Matches.create(newMatch);
 
   const result = Matches.findByPk(dataValues.id);
