@@ -7,6 +7,7 @@ import Matches from '../database/models/Matches.model'
 import mocks from './mocks/matches.mock';
 
 import { Response } from 'superagent';
+import { verify } from 'jsonwebtoken';
 
 chai.use(chaiHttp);
 
@@ -86,7 +87,7 @@ describe('Testando rota /matches', () => {
     expect(chaiHttpResponse.body).to.be.deep.equal({message:'Finished'});
   });
 
-  it('Testa se finaliza com sucesso uma partida', async () => {
+  it('Testa se atualiza uma partida com sucesso', async () => {
     chaiHttpResponse = await chai
       .request(app)
       .patch('/matches/45')

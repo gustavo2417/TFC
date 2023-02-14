@@ -71,4 +71,15 @@ describe('Testando rota /login', () => {
     expect(chaiHttpResponse).to.have.status(401);
     expect(chaiHttpResponse.body).to.deep.equal({message: 'Token not found'});
   });
+
+  it('Testa que é impossivel logar sem um token', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/login/validate')
+      .set("Authorization", 'kksks')
+      
+
+    expect(chaiHttpResponse).to.have.status(401);
+    expect(chaiHttpResponse.body).to.deep.equal({message: 'Invalid token'});
+  });
 });
